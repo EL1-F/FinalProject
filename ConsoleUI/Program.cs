@@ -1,0 +1,49 @@
+﻿using Business.Concrete;
+using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramwork;
+using DataAccess.Concrete.InMemory;
+using System;
+
+namespace ConsoleUI
+{ //SOLİD
+    //open closed principle  >> O harfi
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ProductTest();
+
+           // CategoryTest();
+
+
+
+        }
+
+        //private static void CategoryTest()
+        //{
+        //    CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
+        //    foreach (var i in categoryManager.Get)
+        //    {
+        //        Console.WriteLine(i.CategoryName);
+        //    }
+        //}
+
+        private static void ProductTest()
+        {
+            ProductManager productManager = new ProductManager(new EfProductDal(),new CategoryManager(new EfCategoryDal()));
+            var result = productManager.GetProductDetails();
+            if (result.Success)
+            {
+                foreach (var product in result.Data)
+                {
+                    Console.WriteLine(product.ProductName + " / " + product.CategoryName);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+            
+        }
+    }
+}
