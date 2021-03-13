@@ -1,25 +1,27 @@
 ﻿using Core.Utilities.IoC;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
+using Microsoft.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace Core.CrossCuttingConcerns.Caching.Microsoft
 {
     public class MemoryCacheManager : ICacheManager
     {
+        //Adapter Pattern
         IMemoryCache _memoryCache;
 
         public MemoryCacheManager()
         {
             _memoryCache = ServiceTool.ServiceProvider.GetService<IMemoryCache>();
         }
+
         public void Add(string key, object value, int duration)
         {
-            _memoryCache.Set(key, value,TimeSpan.FromMinutes(duration));
+            _memoryCache.Set(key, value, TimeSpan.FromMinutes(duration));
         }
 
         public T Get<T>(string key)
@@ -34,7 +36,7 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
 
         public bool IsAdd(string key)
         {
-            return _memoryCache.TryGetValue(key, out _); //value döndürme >>out_
+            return _memoryCache.TryGetValue(key, out _);
         }
 
         public void Remove(string key)
@@ -42,7 +44,7 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
             _memoryCache.Remove(key);
         }
 
-        public void RemoveByPattern(string pattern) //çalışma anında bellekten silmeye yarar
+        public void RemoveByPattern(string pattern)
         {
             var cacheEntriesCollectionDefinition = typeof(MemoryCache).GetProperty("EntriesCollection", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             var cacheEntriesCollection = cacheEntriesCollectionDefinition.GetValue(_memoryCache) as dynamic;
@@ -64,3 +66,4 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
         }
     }
 }
+

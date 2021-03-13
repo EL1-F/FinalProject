@@ -1,5 +1,4 @@
 ﻿using Castle.DynamicProxy;
-using Microsoft.Extensions.DependencyInjection;
 using Core.CrossCuttingConcerns.Caching;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
@@ -7,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Core.Aspects.Autofac.Caching
 {
@@ -25,7 +25,7 @@ namespace Core.Aspects.Autofac.Caching
         {
             var methodName = string.Format($"{invocation.Method.ReflectedType.FullName}.{invocation.Method.Name}");
             var arguments = invocation.Arguments.ToList();
-            var key = $"{methodName}({string.Join(",", arguments.Select(x => x?.ToString() ?? "<Null>"))})"; //?? >ilk değer varsa onu yoksa diğerini ekle
+            var key = $"{methodName}({string.Join(",", arguments.Select(x => x?.ToString() ?? "<Null>"))})";
             if (_cacheManager.IsAdd(key))
             {
                 invocation.ReturnValue = _cacheManager.Get(key);

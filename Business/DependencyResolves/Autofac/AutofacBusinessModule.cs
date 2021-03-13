@@ -1,7 +1,4 @@
 ﻿using Autofac;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Autofac.Extras.DynamicProxy;
 using Business.Abstract;
 using Business.Concrete;
@@ -10,7 +7,10 @@ using Core.Utilities.Interceptors;
 using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramwork;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Business.DependencyResolvers.Autofac
 {
@@ -18,11 +18,12 @@ namespace Business.DependencyResolvers.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<ProductManager>().As<IProductService>();
-            builder.RegisterType<EfProductDal>().As<IProductDal>();
 
-            builder.RegisterType<CategoryManager>().As<ICategoryService>();
-            builder.RegisterType<EfCategoryDal>().As<ICategoryDal>();
+            builder.RegisterType<ProductManager>().As<IProductService>().SingleInstance();
+            builder.RegisterType<EfProductDal>().As<IProductDal>().SingleInstance();
+
+            builder.RegisterType<CategoryManager>().As<ICategoryService>().SingleInstance();
+            builder.RegisterType<EfCategoryDal>().As<ICategoryDal>().SingleInstance();
 
             builder.RegisterType<UserManager>().As<IUserService>();
             builder.RegisterType<EfUserDal>().As<IUserDal>();
@@ -37,6 +38,7 @@ namespace Business.DependencyResolvers.Autofac
                 {
                     Selector = new AspectInterceptorSelector()
                 }).SingleInstance();
+
 
         }
     }

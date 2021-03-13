@@ -1,14 +1,14 @@
 ﻿using Castle.DynamicProxy;
-using Microsoft.Extensions.DependencyInjection;
 using Core.CrossCuttingConcerns.Caching;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Core.Aspects.Autofac.Caching
-{//data bozulduğunda(güncellendiğinde ,silindiğinde..) çalışır
+{
     public class CacheRemoveAspect : MethodInterception
     {
         private string _pattern;

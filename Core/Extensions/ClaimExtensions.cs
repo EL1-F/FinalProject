@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 
 namespace Core.Extensions
-{ //Claim normalde var fakat biz artı özellik ekliyoruz
-    //extension  eklemek için hem class hem metot static olmalı
+{
     public static class ClaimExtensions
     {
         public static void AddEmail(this ICollection<Claim> claims, string email)
@@ -29,5 +26,6 @@ namespace Core.Extensions
         {
             roles.ToList().ForEach(role => claims.Add(new Claim(ClaimTypes.Role, role)));
         }
-    }   
+    }
 }
+

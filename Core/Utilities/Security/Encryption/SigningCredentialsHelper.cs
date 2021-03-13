@@ -5,10 +5,10 @@ using System.Text;
 
 namespace Core.Utilities.Security.Encryption
 {
-    public class SigningCredentialsHelper //token servislerinin oluşturulabilmesi için 
+    public class SigningCredentialsHelper
     {
         public static SigningCredentials CreateSigningCredentials(SecurityKey securityKey)
-        {//yönetmek için anahtar,kullanacağın yöntem
+        {
             return new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature);
         }
     }
